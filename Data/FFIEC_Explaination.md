@@ -1,9 +1,8 @@
-
 ## Call report notes
 
 ---
 
-Quarterly call reports for all [very National Bank, State Member Bank and insured Nonmember Bank](http://www2.fdic.gov/Call_TFR_Rpts/inform.asp) since 2001 are available for download in tab delimited format from the [Federal Financial Institutions Examination Council (FFIEC)](https://cdr.ffiec.gov/public/PWS/DownloadBulkData.aspx). Note that thrifts and credit unions are not included in this data set.
+Quarterly call reports for all [National Bank, State Member Bank and insured Nonmember Bank](http://www2.fdic.gov/Call_TFR_Rpts/inform.asp) since 2001 are available for download in tab delimited format from the [Federal Financial Institutions Examination Council (FFIEC)](https://cdr.ffiec.gov/public/PWS/DownloadBulkData.aspx). Note that thrifts and credit unions are not included in this data set.
 
 ### Variable coding scheme
 
