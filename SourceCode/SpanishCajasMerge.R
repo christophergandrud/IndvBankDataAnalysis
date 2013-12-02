@@ -1,7 +1,7 @@
 #################
 # Parse Spanish Cajas XBRL files 
 # Christopher Gandrud
-# 19 November 2013
+# 2 December 2013
 #################
 
 # Load packages
@@ -11,6 +11,7 @@ library(reshape2)
 library(DataCombine)
 library(lubridate)
 
+# Data gathered from: http://www.cajasdeahorros.es/#/PAG|estados
 setwd('~/Desktop/Cajas/')
 
 Files <- list.files()
@@ -24,6 +25,17 @@ for (i in Files){
 	# Create date variable value
 	date <- unique(Temp$instant)
 	date <- date[2]
+  
+  # Correct identifier numbering format issue for data before 2009
+  if ("identifier" %in% names(Temp)){
+    TempID <- subset(Temp, .id == "context")
+    for(i in 1:nrow(TempID)){
+      TempID$In[[i]] <- grepl("http", TempID$identifier[[i]])
+    }
+    TempID <- subset(TempID, In == FALSE)
+    Temp <- FindReplace(data = Temp, Var = '.attrs', replaceData = TempID, 
+                        from = '.attrs', to = 'identifier', exact = TRUE)
+  }
 
 	# Keep important variables and ids
 	Temp <- Temp[, c('.attrs', '.id', 'text')]
@@ -32,6 +44,7 @@ for (i in Files){
 	# Drop attributes other than bank identifier
 	Temp <- subset(Temp, .attrs != '-3')
 	Temp <- subset(Temp, .attrs != 'uEUR')
+  Temp <- subset(Temp, .attrs != 'u1')
 
 	# Excract bank code
 	Temp$.attrs <- gsub("cES", "", Temp$.attrs)
@@ -57,6 +70,8 @@ for (i in Files){
 # Clean Data
 Combined$date <- ymd(Combined$date)
 Combined <- Combined[order(Combined$bank, Combined$date), ]
+
+write.csv(Combined, file = "~/Desktop/CajasCombined.csv")
 
 #### Tests ###
 CombinedSub <- Combined
