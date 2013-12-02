@@ -40,7 +40,8 @@ Translated <- data.frame(
 		, "Entidades multigrupo"                                                                  
 		, "Entidades del grupo"                                                                   
 		, "CONTRATOS DE SEGUROS VINCULADOS A PENSIONES"                                           
-		, "ACTIVO MATERIAL"                                                                       
+		, "ACTIVO MATERIAL",
+		"Activo material"
 		, "Inmovilizado material"                                                                 
 		, "De uso propio"                                                                         
 		, "Cedido en arrendamiento operativo"                                                     
@@ -154,6 +155,7 @@ Translated <- data.frame(
 		'Investments: Jointly controlled entities',
 		'Investments: Group entities',
 		'INSURANCE CONTRACTS LINKED TO PENSIONS',
+		'TANGIBLE ASSETS',
 		'TANGIBLE ASSETS',
 		'Tangible Assets: Property, plants and equipment',
 		'Tangible Assets: For own use',

@@ -12,6 +12,9 @@ library(DataCombine)
 library(plyr)
 library(lubridate)
 
+# Create translated variable data frame
+source('~/Dropbox/AMCProject/FailuresAndFederalism/IndvBankDataAnalysis/SourceCode/SpanishCommercialTranslation.R')
+
 setwd("~/Dropbox/AMCProject/FailuresAndFederalism/IndvBankDataAnalysis/Data/Spain/CommercialBanks/Domestic/")
 
 Files <- list.files()
@@ -27,6 +30,7 @@ for (i in Files){
   Temp$Var <- gsub("[0-9]", "", Temp$Var)
   Temp$Var <- gsub("\\.", "", Temp$Var)
   Temp$Var <- str_trim(Temp$Var)
+  Temp <- FindReplace(data = Temp , Var = 'Var', replaceData = Translated, from = 'from', to = 'to')
   TempMolten <- melt(Temp, id.vars = 'Var')
   names(TempMolten) <- c("variable", "bank", "value")
   TempMolten <- MoveFront(TempMolten, "bank")
@@ -44,10 +48,10 @@ for (i in Files){
   
   # Merge Together
   Combined <- rbind.fill(Combined, TempCast)
-  
-  # Remove temps
-  rmExcept("Combined", message = FALSE)
 }
+
+# Remove temps
+rmExcept("Combined", "Translated", message = FALSE)
 
 # Clean Data
 Combined$date <- dmy(Combined$date)
@@ -84,4 +88,3 @@ ggplot(CombinedPSub, aes(date, PASIVOS.ASOCIADOS.CON.ACTIVOS.NO.CORRIENTES.EN.VE
 
 
 write.csv(Combined, "~/Dropbox/AMCProject/FailuresAndFederalism/IndvBankDataAnalysis/Data/Spain/SpainCommercialMerged.csv")
-
